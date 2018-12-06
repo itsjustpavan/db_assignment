@@ -1,0 +1,70 @@
+1)	WRITE A SQL STATEMENT TO DISPLAY THE LOWEST PAID EMPLOYEE'S (NAME , SALARY , DEPARTMENT NAME)
+select employees.salary, employees.first_name , employees.last_name ,departments.department_name from employees  
+INNER JOIN departments ON departments.department_id = employees.department_id order by salary limit 1;
+
+2)	LIST MINIMUM SALARY FOR EACH DEPARTMENT
+select department_id, min(salary) from employees group by department_id;
+
+3)	WRITE A QUERY  BASED ON  FOLLOWING RESULT. 
+
+select e.employee_id,e.first_name,e.job_id,e.salary,e.department_id,d.department_name from employees e INNER JOIN departments d ON e.department_id=d.department_id;
+
+4)	LIST ALL THE EMPLOYEES WHO ARE WORKING IN FORD’S DEPARTMENT.
+select * from employees where department_id =(select department_id from employees where first_name ='amit');
+
+5)	LIST ALL EMPLOYEE WHO ARE WORKING IN WARD'S DEPARTMENT AND
+	EARNING MORE THEN MARTIN
+select e.*,d.department_name from employees e INNER JOIN departments d ON e.department_id=d.department_id
+    where department_name="sales" and e.salary>(select salary from employees where last_name='patel');
+
+6	DISPLAY EMPLOYEE NUMBER, NAME,DEPT NUMBER, DEPT NAME, AND LOCATION
+select e.first_name ,e.employee_id ,d.department_id , d.department_name , l.location_id, l.street_address 
+from employees e INNER JOIN departments d INNER JOIN locations l ON e.department_id=d.department_id AND d.location_id=l.location_id;
+ 
+7)	DISPLAY THE FOLLOWING RESULT
+ select e.last_name,e.department_id,d.department_name from employees e INNER JOIN departments d on e.employee_id=d.department_id;
+
+8)	LIST ALL THE EMPLOYEE WHO ARE WORKING IN NEW YORK
+
+select e.first_name ,e.employee_id ,d.department_id , d.department_name , l.location_id, l.street_address
+    ->  from employees e INNER JOIN departments d INNER JOIN locations l ON e.department_id=d.department_id AND d.location_id=l.location_id where l.city='bombay';
+
+9)	WRITE A SQL STATEMENT TO DISPLAY THE LOWEST PAID EMPLOYEE'S (NAME , SALARY , DEPARTMENT NAME) IN THE RESPECTIVE DEPARTMENT
+select e.employee_id,e.last_name,min(e.salary),d.department_name from employees e inner join departments d ON e.department_id=d.department_id group by department_name;
+
+
+10)	WRITE A SQL STATEMENT TO DISPLAY THE HIGHEST PAID EMPLOYEE'S (NAME, JOB, MANAGER NAME, SALARY AND DEPARTMENT NAME AND DEPARTMENT NO.) IN THE RESPECTIVE DEPARTMENT.
+select e.employee_id,e.last_name,max(e.salary),d.department_name from employees e inner join departments d ON e.department_id=d.department_id group by department_name;
+
+11)	WRITE A SQL STATEMENT TO DISPLAY THE EMPLOYEE NAME (BOSS) AND NUMBER OF EMPLOYEE (SUBORDINATES) DIRECTLY REPORTING TO HIM?
+select e1.first_name AS "manager name",count(e2.employee_id) from employees e1 INNER JOIN employees e2 on e2.manager_id=e1.employee_id GROUP by e2.manager_id;
+
+12 DISPLAY THE NAMES, DESIGNATION AND SALARIES OF ALL EMPLOYEES WHO HAVE MANAGER ALONG WITH MANAGER'S NAME, DESIGNATION AND MANAGER'S SALARY.
+
+SELECT e1.first_name,e1.job_id,e1.salary,e2.first_name,e2.job_id,e2.salary from employees e1 INNER JOIN employees e2 ON e1.manager_id=e2.manager_id;
+
+
+13)	 CREATE THE FOLLOWING TABLES:
+ORDER: {ID, ORDERDATE, ORDERNUMBER}
+ORDER_ITEM: {ID, ORDERID, PRODUCTID, UNITPRICE, QUANTITY}
+PRODUCT: {ID, PRODUCTNAME}
+WRITE A QUERY TO DISPLAY THE FOLLOWING OUTPUT SORTED BY ORDER NO:
+
+ORDER_NO	ORDER_DATE	PRODUCT_NAME	QUANTITY	UNIT_PRICE
+7369	7/4/2012 12:00:00 AM	EASY-TRADING	800	20
+7900	2/10/2011 12:00:00 AM	BANK-ANYWHERE	950	30
+7934	9/23/2015 12:00:00 AM	TRIP-MANAGER	1300	10
+
+select o.order_number,o.order_date,i.quantity,i.unit_price,p.product_name from orders o INNER JOIN order_item i ON o.order_id=i.order_id INNER JOIN products p on i.product_id=p.product_id GROUP BY o.order_number;
+14)	 FIND THE 2ND MINIMUM SALARY OF THE EMPLOYEE.
+select min(salary) from employees where salary <>(select min(salary) from employees);
+
+15)	 FIND THE MAX 3 SALARIES FROM EMPLOYEE TABLE.
+select distinct salary from employees order by salary desc limit 3;
+
+16)	 DISPLAY COMMON RECORDS FROM EMP_1 & EMP_2 TABLES. (USE INTERSECT)
+
+select * from employees e where employees.department_id=department.department_id INTERSECT (select * from departments);
+
+17)	 DISPLAY DEPARTMENT NO WISE TOTAL SALARY WHERE MORE THAN 2 EMPLOYEES EXIST IN A DEPARTMENT.
+
